@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <title>Lead Tracker</title>
+</head>
+<body>
+  <div class="navbarhead">
+  <div class="navbar">
+      <!-- Hamburger Menu Icon -->
+<button id="navToggle" class="icon-button">
+  <span class="material-icons">menu</span>
+</button>
+
+
+      <!-- Dropdown Menu -->
+      <!-- Dropdown Menu -->
+<div id="dropdownMenu" class="dropdown hidden">
+  <button id="exportLinks" class="drop">
+    <span class="material-icons">upload</span> Export Links
+  </button>
+  <button id="importLinks">
+    <span class="material-icons">download</span> Import Links
+  </button>
+  <button id="darkModeToggle" class="drop">
+    <span class="material-icons">dark_mode</span> Change Theme
+  </button>
+  <button id="clearAll" class="drop">
+    <span class="material-icons">delete</span> Clear All
+  </button>
+  <button id="aboutUs" class="drop">
+    <span class="material-icons">info</span> About
+  </button>
+  <button id="settings" class="drop">
+    <span class="material-icons">settings</span> Settings
+  </button>
+  
+  <div id="infoBar" class="info-bar">
+    <p id="linksCount" class="glowing-text">Total Links: 0</p>
+     <p id="clock" ></p>
+  </div>
+</div>
+
+      <input type="file" id="fileInput" accept=".jtc" style="display: none;" />
+
+      <!-- Title -->
+      <p><span class="lead">Lead</span> Tracker</p>
+    </div>
+
+    <div class="container"> 
+      <div class="manual-input">
+        <!-- Manual URL Input -->
+        <input type="text" id="manualUrl" placeholder="Enter website URL">
+        
+        <!-- Save Current Site Button -->
+        <button id="saveCurrentSite" class="action-button">
+          <span class="material-icons">computer</span> Save Site
+        </button>
+
+        <!-- Save URL Button -->
+        <button id="saveManual" class="action-button">
+          <span class="material-icons">add_link</span> Save URL
+        </button>
+
+        <!-- Search Links Input -->
+        <div class="search-container">
+          <span class="material-icons search-icon">search</span>
+          <input type="text" id="searchLinks" placeholder="Search links..." />
+        </div>        
+      </div>
+    </div>
+  </div>
+
+  <!-- Saved Links Section -->
+  <div class="containerList">
+    <ul id="savedLinks" class="link-list"></ul>
+  </div> 
+
+  <!-- Custom Modal for Delete Confirmation -->
+  <div id="deleteModal" class="modal hidden">
+    <div class="modal-content">
+      <p>Are you sure you want to delete this link?</p>
+      <button id="confirmDelete" class="modal-button">
+        <span class="material-icons">check</span> Yes
+      </button>
+      <button id="cancelDelete" class="modal-button">
+        <span class="material-icons">close</span> No
+      </button>
+    </div>
+  </div>
+
+  <!-- Action Confirmation Modal -->
+  <div id="actionModal" class="modal hidden">
+    <div class="modal-content">
+      <p id="actionText"></p>
+      <button id="confirmAction" class="modal-button">
+        <span class="material-icons">check_circle</span> Yes
+      </button>
+      <button id="cancelAction" class="modal-button">
+        <span class="material-icons">cancel</span> No
+      </button>
+    </div>
+  </div>
+  <!-- import confirm action -->
+  <div id="importModal" class="modal-M hide">
+    <div class="modal-content-M">
+      <p id="importMessage">Do you want to import the selected links?</p>
+      <button id="confirmImport" class="confirm-btn">Yes, Import</button>
+      <button id="cancelImport" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+  
+  <div id="aboutPopup" class="popup-container hidden">
+    <div class="popup-content">
+      <div class="popup-header">
+        <h2>About This Extension</h2>
+        <button id="closePopup" class="close-btn">&times;</button>
+      </div>
+      <div class="popup-body">
+        <p>
+          Welcome to <strong>leads tracker</strong>, your ultimate tool for enhancing productivity and streamlining your workflow.
+        </p>
+        <p>
+          This extension offers cutting-edge features like importing and managing links, saving important data, and so much more!
+        </p>
+        <ul>
+          <li>🚀 <strong>Efficiency</strong>: Simplify your tasks with ease.</li>
+          <li>💾 <strong>Storage</strong>: Securely save and manage your data.</li>
+          <li>🌐 <strong>Connectivity</strong>: Seamless integration with your browser.</li>
+        </ul>
+        <p>
+          Developed with ❤️ by <strong>JerrytopcyCode{}</strong>. For inquiries or support, contact us at <a href="mailto:your.email@example.com">jerrytopcy@outlook.com</a>.
+        </p>
+      </div>
+      <div class="popup-footer">
+        <button id="popupMoreInfo" class="info-btn">Learn More</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="moreInfoPopup" class="popup-container hidden">
+    <div class="popup-content">
+      <div class="popup-header">
+        <h2>Extension Features</h2>
+        <button id="closeMoreInfo" class="close-btn">&times;</button>
+      </div>
+      <div class="popup-body">
+        <p>This extension includes:</p>
+        <ul>
+          <li>🔍 Powerful search and filter options.</li>
+          <li>📁 Easy link import and export.</li>
+          <li>⚙️ Customizable settings tailored to your needs.</li>
+        </ul>
+      </div>
+      <div class="popup-footer">
+        <button id="closeMoreInfoFooter" class="info-btn">Close</button>
+      </div>
+    </div>
+  </div>
+<!-- Settings Panel -->
+<div id="settingsPanel" class="settings-panel hidden">
+  <div class="settings-header">
+    <h2>Settings</h2>
+    <button id="closeSettings" class="close-btn">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+  <div class="settings-content">
+    <div class="setting-item">
+      <label for="autoThemeToggle (DELETE ME TO MAKE IT WORK)">Enable Auto Theme</label>
+      <div>
+        <span id="autoThemeDetails" class="info-icon" title="Night mode starts at 6:00 PM and ends at 6:00 AM">
+          <span class="material-icons">info</span>
+        <button id="autoThemeToggle" class="toggle-btn">Off</button>
+      </div>
+      
+    </div>
+    <!-- Auto Theme Toggle -->
+<div class="setting-item">
+    <span>Set Auto Theme Time</span>
+    <div ><span class="material-icons">edit</span>
+  <button id="editThemeSchedule" class="edit-btn">Edit Schedule</button>
+</div>
+</div>
+
+<!-- Settings Dialog -->
+<div id="themeSettingsModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Set Night Mode Schedule</h2>
+    <div class="modal-item">
+      <label for="nightStart">Start Time:</label>
+      <input type="time" id="nightStart" value="18:00">
+    </div>
+    <div class="modal-item">
+      <label for="nightEnd">End Time:</label>
+      <input type="time" id="nightEnd" value="06:00">
+    </div>
+    <div class="modal-buttons">
+      <button id="saveThemeSchedule" class="save-btn">Save</button>
+      <button id="closeModal" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+    <!-- Add more settings items here later -->
+  </div>
+</div>
+
+  <!-- Notification Area -->
+  <div id="notification-area"></div>
+ 
+  <!-- Footer -->
+  <footer class="footer">
+    <h4 class="footer-text">Developed with ❤️ by JerrytopcyCode()</h4>
+    <p class="footer-copyright">© 2024 All Rights Reserved</p>
+ 
+
+    
+</footer>
+  <script src="popup.js"></script>
+</body>
+</html>
+
